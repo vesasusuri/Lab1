@@ -9,9 +9,9 @@ import Companies from './pages/Companies/Companies';
 import Jobs from './pages/Jobs/Jobs';
 import JobDetailPage from './pages/JobDetailPage/JobDetailPage';
 import Pricing from './pages/Pricing/Pricing';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
 import Contact from './pages/Contact';
+import Login from './pages/Login/Login';
+import Signup from './pages/Signup/Signup';
 
 export default function App() {
     useEffect(() => {
