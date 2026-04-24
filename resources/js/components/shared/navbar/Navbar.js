@@ -65,7 +65,7 @@ const Navbar = (props) => {
       </div>
 
       <div className="nav-auth">
-        <a href="/" className="contact-us">Login</a>
+        <a href="/login" className="contact-us">Login</a>
       </div>
       <MobileNav />
     </div>
