@@ -12,7 +12,10 @@ import Pricing from './pages/Pricing/Pricing';
 import Contact from './pages/Contact/Contact';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
-import Dashboard from './pages/Dashboard/Dashboard';
+import DashboardPage from './pages/User-Dashboard/Dashboard/Dashboard';
+import AppliedJob from './pages/User-Dashboard/AppliedJobs/AppliedJobs';
+import UnfinishedJob from './pages/User-Dashboard/UnfinishedJobs/UnfinishedJob';
+import SavedJob from './pages/User-Dashboard/SavedJobs/SavedJob';
 
 export default function App() {
     useEffect(() => {
@@ -35,7 +38,10 @@ export default function App() {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/jobs/:id" element={<JobDetailPage />} />
 
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/dashboard" element={<DashboardPage/>} />
+                    <Route path="/applied-jobs" element={<AppliedJob/>} />
+                    <Route path="/unfinished-jobs" element={<UnfinishedJob/>} />
+                    <Route path="/saved-jobs" element={<SavedJob/>} />
 
                 </Routes>
             </BrowserRouter>
