@@ -12,6 +12,7 @@ import Pricing from './pages/Pricing/Pricing';
 import Contact from './pages/Contact/Contact';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 export default function App() {
     useEffect(() => {
@@ -33,6 +34,9 @@ export default function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/jobs/:id" element={<JobDetailPage />} />
+
+                    <Route path="/dashboard" element={<Dashboard />} />
+
                 </Routes>
             </BrowserRouter>
         </IntlProvider>
