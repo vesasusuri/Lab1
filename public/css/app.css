@@ -120,93 +120,6 @@
   }
 }
 
-@keyframes aboutFadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(28px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.about-overview__panel,
-.about-overview__stat,
-.about-overview__journey-item,
-.about-team__title,
-.about-team__member {
-  opacity: 0;
-  animation: aboutFadeUp 0.75s ease-out forwards;
-}
-
-.about-overview__panel:nth-child(1) {
-  animation-delay: 0.1s;
-}
-
-.about-overview__panel:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.about-overview__stat:nth-child(1) {
-  animation-delay: 0.22s;
-}
-
-.about-overview__stat:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.about-overview__stat:nth-child(3) {
-  animation-delay: 0.38s;
-}
-
-.about-overview__stat:nth-child(4) {
-  animation-delay: 0.46s;
-}
-
-.about-overview__journey-item:nth-child(1) {
-  animation-delay: 0.26s;
-}
-
-.about-overview__journey-item:nth-child(2) {
-  animation-delay: 0.36s;
-}
-
-.about-overview__journey-item:nth-child(3) {
-  animation-delay: 0.46s;
-}
-
-.about-team__title {
-  animation-delay: 0.12s;
-}
-
-.about-team__member:nth-child(1) {
-  animation-delay: 0.2s;
-}
-
-.about-team__member:nth-child(2) {
-  animation-delay: 0.28s;
-}
-
-.about-team__member:nth-child(3) {
-  animation-delay: 0.36s;
-}
-
-.about-team__member:nth-child(4) {
-  animation-delay: 0.44s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .about-overview__panel,
-  .about-overview__stat,
-  .about-overview__journey-item,
-  .about-team__title,
-  .about-team__member {
-    opacity: 1;
-    animation: none;
-  }
-}
-
 .nav__sticky {
   background: #fff;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 5px 0px;
@@ -478,4 +391,3 @@ body {
     align-items: flex-start;
   }
 }
-

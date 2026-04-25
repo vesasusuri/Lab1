@@ -1,17 +1,17 @@
-.candidate-dashboard {
+.dash {
   width: min(1400px, 100%);
   margin: 94px auto 0;
   padding: 26px 16px 40px;
   min-height: calc(100vh - 94px);
 }
 
-.candidate-dashboard__stats-grid {
+.stats-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
 }
 
-.candidate-dashboard__stat-card {
+.stat-card {
   background: #f9f9f9;
   border-radius: 10px;
   padding: 18px;
@@ -20,7 +20,7 @@
   gap: 14px;
 }
 
-.candidate-dashboard__stat-icon {
+.stat-icon {
   width: 54px;
   height: 54px;
   border-radius: 10px;
@@ -33,22 +33,11 @@
   }
 }
 
-.candidate-dashboard__stat-icon--pink {
-  background:#fdd535;
-}
-.candidate-dashboard__stat-icon--purple {
-  background:#fdd535;
+.stat-icon--yellow {
+  background: #fdd535;
 }
 
-.candidate-dashboard__stat-icon--orange {
-  background:#fdd535;
-}
-
-.candidate-dashboard__stat-icon--blue {
-  background:#fdd535;
-}
-
-.candidate-dashboard__stat-meta {
+.stat-meta {
   h3 {
     margin: 0;
     font-size: 30px;
@@ -65,19 +54,23 @@
   }
 }
 
-.candidate-dashboard__panel {
+.panels {
   margin-top: 28px;
-
-  h2 {
-    margin: 0 0 14px;
-    color: #1a2452;
-    font-size: 31px;
-    font-weight: 700;
-  }
 }
 
-.candidate-dashboard__empty-state {
-  background: #ffffff;
+.panel {
+  margin-bottom: 28px;
+}
+
+.panel-title {
+  margin: 0 0 14px;
+  color: #1a2452;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.empty {
+  background-color:#f9f9f9;
   border-radius: 12px;
   min-height: 240px;
   display: grid;
@@ -86,13 +79,13 @@
   gap: 14px;
 }
 
-.candidate-dashboard__empty-icon {
+.empty-icon {
   width: 78px;
   height: 78px;
   margin: 0 auto;
   border-radius: 50%;
-  background: #edf2ff;
-  color: #6f8bff;
+  background: #fff2c0b9;
+  color: #efc930;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -102,39 +95,39 @@
   }
 }
 
-.candidate-dashboard__empty-state p {
+.empty-title {
   margin: 0;
   color: #9aa5c6;
-  font-size: 27px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 @media (max-width: 1200px) {
-  .candidate-dashboard__stats-grid {
+  .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 768px) {
-  .candidate-dashboard {
+  .dash {
     margin-top: 75px;
     padding: 18px 12px 24px;
   }
 
-  .candidate-dashboard__stats-grid {
+  .stats-grid {
     grid-template-columns: 1fr;
     gap: 12px;
   }
 
-  .candidate-dashboard__panel h2 {
+  .panel-title {
     font-size: 24px;
   }
 
-  .candidate-dashboard__empty-state {
+  .empty {
     min-height: 190px;
   }
 
-  .candidate-dashboard__empty-state p {
+  .empty-title {
     font-size: 20px;
   }
 }
