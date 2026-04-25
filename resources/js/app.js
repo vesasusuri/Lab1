@@ -9,8 +9,9 @@ import Companies from './pages/Companies/Companies';
 import Jobs from './pages/Jobs/Jobs';
 import JobDetailPage from './pages/JobDetailPage/JobDetailPage';
 import Pricing from './pages/Pricing/Pricing';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
+import Contact from './pages/Contact/Contact';
+import Login from './pages/Login/Login';
+import Signup from './pages/Signup/Signup';
 
 export default function App() {
     useEffect(() => {
@@ -27,6 +28,7 @@ export default function App() {
                     <Route path="/about-us" element={<About />} />
                     <Route path="/companies" element={<Companies />} />
                     <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/contact-us" element={<Contact />} />
                     <Route path="/pricing" element={<Pricing />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
