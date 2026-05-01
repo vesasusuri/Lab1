@@ -19,13 +19,13 @@ import UnfinishedJob from './views/User-View/pages/User-Dashboard/UnfinishedJobs
 import SavedJob from './views/User-View/pages/User-Dashboard/SavedJobs/SavedJob';
 import Interview from './views/User-View/pages/User-Dashboard/Interview/Interview';
 import UserViewLayout from './views/User-View/UserViewLayout';
-import HireDashboardPage from './pages/HireDashboard/HireDashboard';
-import HireDashboardInterviewsPage from './pages/HireDashboardInterviewsPage/HireDashboardInterviewsPage';
-import HireDashboardHiresPage from './pages/HireDashboardHiresPage/HireDashboardHiresPage';
-import HireDashboardAnalyticsPage from './pages/HireDashboardAnalyticsPage/HireDashboardAnalyticsPage';
-import HireDashboardSettingsPage from './pages/HireDashboardSettingsPage/HireDashboardSettingsPage';
-import HireDashboardApplicationsPage from './pages/HireDashboardApplicationsPage/HireDashboardApplicationsPage';
-import HireDashboardListingsPage from './pages/HireDashboardListingsPage/HireDashboardListingsPage';
+import HireDashboardPage from './views/HR-View/pages/HireDashboard/HireDashboard';
+import HireDashboardInterviewsPage from './views/HR-View/pages/HireDashboardInterviewsPage/HireDashboardInterviewsPage';
+import HireDashboardHiresPage from './views/HR-View/pages/HireDashboardHiresPage/HireDashboardHiresPage';
+import HireDashboardAnalyticsPage from './views/HR-View/pages/HireDashboardAnalyticsPage/HireDashboardAnalyticsPage';
+import HireDashboardSettingsPage from './views/HR-View/pages/HireDashboardSettingsPage/HireDashboardSettingsPage';
+import HireDashboardApplicationsPage from './views/HR-View/pages/HireDashboardApplicationsPage/HireDashboardApplicationsPage';
+import HireDashboardListingsPage from './views/HR-View/pages/HireDashboardListingsPage/HireDashboardListingsPage';
 
 export default function App() {
     useEffect(() => {

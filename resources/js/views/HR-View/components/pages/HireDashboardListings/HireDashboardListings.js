@@ -1,7 +1,7 @@
 import React from 'react';
 import './HireDashboardListings.scss';
 import { useNavigate } from 'react-router-dom';
-import jobsData from '../../../data/jobsData';
+import jobsData from '../../../../User-View/components/pages/JobsCards/jobsData';
 
 const listingsData = jobsData.slice(0, 5).map((job, i) => ({
   ...job,
