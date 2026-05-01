@@ -33,6 +33,8 @@ Route::view('/dashboard', 'welcome');
 Route::view('/applied-jobs', 'welcome');
 Route::view('/unfinished-jobs', 'welcome');
 Route::view('/saved-jobs', 'welcome');
+Route::view('/interviews', 'welcome');
+Route::view('/interviews/{roomName}', 'welcome');
 
 
 Route::post('/auth/register', [AuthController::class, 'register']);

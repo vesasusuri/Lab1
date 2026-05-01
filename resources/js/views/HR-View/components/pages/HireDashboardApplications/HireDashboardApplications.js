@@ -1,6 +1,6 @@
 import React from 'react';
 import './HireDashboardApplications.scss';
-import applicationsData from '../../../data/applicationsData';
+import applicationsData from '../HireDashboardAnalytics/applicationsData';
 
 const tabs = ['All', 'Reviewing', 'Shortlisted', 'Rejected'];
 
