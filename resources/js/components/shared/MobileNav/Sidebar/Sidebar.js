@@ -56,7 +56,7 @@ const Sidebar = (props) => {
         </div>
 
         <div className="nav-sidebar-link">
-          <a href="/contact-us" className="nav-anchor">
+          <a href="/" className="nav-anchor">
             <BiSupport />
             Contact Us
           </a>
@@ -64,7 +64,7 @@ const Sidebar = (props) => {
       </div>
 
       <div className="sidebar-auth">
-        <a href="/login" className="contact-us">
+        <a href="/" className="contact-us">
           Log In
         </a>
       </div>

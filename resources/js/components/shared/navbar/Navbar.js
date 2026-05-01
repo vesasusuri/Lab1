@@ -59,13 +59,13 @@ const Navbar = (props) => {
         </div>
 
         <div className="nav-link contact-us">
-          <a href="/contact-us" className="inner-nav-link">Contact Us</a>
+          <a href="/" className="inner-nav-link">Contact Us</a>
           <div className="line"></div>
         </div>
       </div>
 
       <div className="nav-auth">
-        <a href="/login" className="contact-us">Login</a>
+        <a href="/" className="contact-us">Login</a>
       </div>
       <MobileNav />
     </div>
