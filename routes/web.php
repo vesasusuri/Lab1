@@ -30,12 +30,14 @@ Route::view('/login', 'welcome')->name('login');
 Route::view('/signup', 'welcome')->name('signup');
 Route::view('/jobs/{any}', 'welcome');
 Route::view('/dashboard', 'welcome');
+Route::view('/profile', 'welcome');
 Route::view('/applied-jobs', 'welcome');
 Route::view('/unfinished-jobs', 'welcome');
 Route::view('/saved-jobs', 'welcome');
 Route::view('/interviews', 'welcome');
 Route::view('/interviews/{roomName}', 'welcome');
-
+Route::view('/messages', 'welcome');
+Route::view('/resume', 'welcome');
 
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
