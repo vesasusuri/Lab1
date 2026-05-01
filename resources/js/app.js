@@ -3,14 +3,22 @@ import { IntlProvider } from 'react-intl';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Aos from 'aos';
 import "aos/dist/aos.css";
-import Home from './pages/Home/Home';
-import About from './pages/About/About';
-import Companies from './pages/Companies/Companies';
-import Jobs from './pages/Jobs/Jobs';
-import JobDetailPage from './pages/JobDetailPage/JobDetailPage';
-import Pricing from './pages/Pricing/Pricing';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
+import Home from './views/User-View/pages/Home/Home';
+import About from './views/User-View/pages/About/About';
+import Companies from './views/User-View/pages/Companies/Companies';
+import CompaniesDetail from './views/User-View/pages/CompaniesDetails/CompaniesDetail';
+import Jobs from './views/User-View/pages/Jobs/Jobs';
+import JobDetailPage from './views/User-View/pages/JobDetailPage/JobDetailPage';
+import Pricing from './views/User-View/pages/Pricing/Pricing';
+import Contact from './views/User-View/pages/Contact/Contact';
+import Login from './views/User-View/pages/Login/Login';
+import Signup from './views/User-View/pages/Signup/Signup';
+import DashboardPage from './views/User-View/pages/User-Dashboard/Dashboard/Dashboard';
+import AppliedJob from './views/User-View/pages/User-Dashboard/AppliedJobs/AppliedJobs';
+import UnfinishedJob from './views/User-View/pages/User-Dashboard/UnfinishedJobs/UnfinishedJob';
+import SavedJob from './views/User-View/pages/User-Dashboard/SavedJobs/SavedJob';
+import Interview from './views/User-View/pages/User-Dashboard/Interview/Interview';
+import UserViewLayout from './views/User-View/UserViewLayout';
 import HireDashboardPage from './pages/HireDashboard/HireDashboard';
 import HireDashboardInterviewsPage from './pages/HireDashboardInterviewsPage/HireDashboardInterviewsPage';
 import HireDashboardHiresPage from './pages/HireDashboardHiresPage/HireDashboardHiresPage';
@@ -27,14 +35,25 @@ export default function App() {
         <IntlProvider locale="en" messages={{}}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about-us" element={<About />} />
-                    <Route path="/companies" element={<Companies />} />
-                    <Route path="/jobs" element={<Jobs />} />
-                    <Route path="/pricing" element={<Pricing />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/jobs/:id" element={<JobDetailPage />} />
+                    <Route element={<UserViewLayout />}>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/about-us" element={<About />} />
+                        <Route path="/companies" element={<Companies />} />
+                        <Route path="/companies/:id" element={<CompaniesDetail />} />
+                        <Route path="/jobs" element={<Jobs />} />
+                        <Route path="/contact-us" element={<Contact />} />
+                        <Route path="/pricing" element={<Pricing />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/jobs/:id" element={<JobDetailPage />} />
+                        <Route path="/dashboard" element={<DashboardPage/>} />
+                        <Route path="/applied-jobs" element={<AppliedJob/>} />
+                        <Route path="/unfinished-jobs" element={<UnfinishedJob/>} />
+                        <Route path="/saved-jobs" element={<SavedJob/>} />
+                        <Route path="/interviews" element={<Interview/>} />
+                        <Route path="/interviews/:roomName" element={<Interview/>} />
+                    </Route>
+
                     <Route path="/hire-dashboard" element={<HireDashboardPage />} />
                     <Route path="/hire-dashboard/interviews" element={<HireDashboardInterviewsPage />} />
                     <Route path="/hire-dashboard/hires" element={<HireDashboardHiresPage />} />

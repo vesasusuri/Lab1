@@ -20,3 +20,22 @@ Route::view('/hire-dashboard/analytics', 'welcome');
 Route::view('/hire-dashboard/settings', 'welcome');
 Route::view('/hire-dashboard/applications', 'welcome');
 Route::view('/hire-dashboard/listings', 'welcome');
+Route::view('/about-us', 'welcome');
+Route::view('/companies', 'welcome');
+Route::view('/companies/{any}', 'welcome')->where('any', '.*');
+Route::view('/jobs', 'welcome');
+Route::view('/contact-us', 'welcome');
+Route::view('/pricing', 'welcome');
+Route::view('/login', 'welcome')->name('login');
+Route::view('/signup', 'welcome')->name('signup');
+Route::view('/jobs/{any}', 'welcome');
+Route::view('/dashboard', 'welcome');
+Route::view('/applied-jobs', 'welcome');
+Route::view('/unfinished-jobs', 'welcome');
+Route::view('/saved-jobs', 'welcome');
+
+
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth');
+Route::get('/auth/user', [AuthController::class, 'user'])->middleware('auth');
