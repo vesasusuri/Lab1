@@ -11,13 +11,17 @@ import JobDetailPage from './pages/JobDetailPage/JobDetailPage';
 import Pricing from './pages/Pricing/Pricing';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import HireDashboardPage from './pages/HireDashboard/HireDashboard';
+import HireDashboardInterviewsPage from './pages/HireDashboardInterviewsPage/HireDashboardInterviewsPage';
+import HireDashboardHiresPage from './pages/HireDashboardHiresPage/HireDashboardHiresPage';
+import HireDashboardAnalyticsPage from './pages/HireDashboardAnalyticsPage/HireDashboardAnalyticsPage';
+import HireDashboardSettingsPage from './pages/HireDashboardSettingsPage/HireDashboardSettingsPage';
+import HireDashboardApplicationsPage from './pages/HireDashboardApplicationsPage/HireDashboardApplicationsPage';
+import HireDashboardListingsPage from './pages/HireDashboardListingsPage/HireDashboardListingsPage';
 
 export default function App() {
     useEffect(() => {
-        Aos.init({
-          duration:1250,
-          once: true
-        })
+        Aos.init({ duration: 1250, once: true })
     }, [])
     return (
         <IntlProvider locale="en" messages={{}}>
@@ -31,6 +35,13 @@ export default function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/jobs/:id" element={<JobDetailPage />} />
+                    <Route path="/hire-dashboard" element={<HireDashboardPage />} />
+                    <Route path="/hire-dashboard/interviews" element={<HireDashboardInterviewsPage />} />
+                    <Route path="/hire-dashboard/hires" element={<HireDashboardHiresPage />} />
+                    <Route path="/hire-dashboard/analytics" element={<HireDashboardAnalyticsPage />} />
+                    <Route path="/hire-dashboard/settings" element={<HireDashboardSettingsPage />} />
+                    <Route path="/hire-dashboard/applications" element={<HireDashboardApplicationsPage />} />
+                    <Route path="/hire-dashboard/listings" element={<HireDashboardListingsPage />} />
                 </Routes>
             </BrowserRouter>
         </IntlProvider>
