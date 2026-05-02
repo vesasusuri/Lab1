@@ -20,6 +20,8 @@ Route::view('/hire-dashboard/analytics', 'welcome');
 Route::view('/hire-dashboard/settings', 'welcome');
 Route::view('/hire-dashboard/applications', 'welcome');
 Route::view('/hire-dashboard/listings', 'welcome');
+Route::view('/hire-dashboard/messages', 'welcome');
+Route::view('/hire-dashboard/team', 'welcome');
 Route::view('/about-us', 'welcome');
 Route::view('/companies', 'welcome');
 Route::view('/companies/{any}', 'welcome')->where('any', '.*');
