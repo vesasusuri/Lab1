@@ -1,0 +1,226 @@
+.resume-page {
+    background: #f7f7f5;
+    min-height: 100vh;
+    padding-top: 80px;
+  
+    &__body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 2rem 5rem;
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+  
+    &__left {
+      flex: 0 0 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  
+    &__right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      min-width: 0;
+    }
+  
+    &__actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  
+    &__cancel {
+      padding: 14px 28px;
+      background: #fff;
+      color: #111;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+  
+      &:hover {
+        border-color: #111;
+      }
+    }
+  
+    &__save {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: #1a1a2e;
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+  
+      &:hover {
+        opacity: 0.88;
+      }
+    }
+  }
+  
+  .resume-upload {
+    background: #fff;
+    border: 1px solid #e7dfd4;
+    border-radius: 20px;
+    overflow: hidden;
+  
+    &__header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid #e7dfd4;
+    }
+  
+    &__icon {
+      width: 42px;
+      height: 42px;
+      background: #fff3cd;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #111;
+    }
+  
+    &__title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #111;
+      margin: 0 0 2px;
+    }
+  
+    &__subtitle {
+      font-size: 13px;
+      color: #777;
+      margin: 0;
+    }
+  
+    &__body {
+      padding: 2rem;
+    }
+  
+    &__drop {
+      border: 2px dashed #e7dfd4;
+      border-radius: 14px;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      color: #aaa;
+      text-align: center;
+  
+      p {
+        font-size: 15px;
+        color: #777;
+        margin: 0;
+  
+        span {
+          color: #f5c040;
+          font-weight: 600;
+          text-decoration: underline;
+        }
+      }
+  
+      &--active {
+        border-color: #f5c040;
+        background: #fff3cd;
+      }
+  
+      &:hover {
+        border-color: #f5c040;
+      }
+    }
+  
+    &__file {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: #f7f7f5;
+      border: 1px solid #e7dfd4;
+      border-radius: 12px;
+      color: #111;
+    }
+  
+    &__file-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+    }
+  
+    &__file-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+    }
+  
+    &__file-size {
+      font-size: 12px;
+      color: #aaa;
+    }
+  
+    &__remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+  
+      &:hover {
+        color: #111;
+      }
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .resume-page {
+      &__body {
+        flex-direction: column;
+        padding: 1.5rem 1.5rem 4rem;
+      }
+  
+      &__left {
+        flex: unset;
+        width: 100%;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .resume-page {
+      &__body {
+        padding: 1rem 1rem 3rem;
+      }
+  
+      &__actions {
+        flex-direction: column;
+      }
+  
+      &__cancel,
+      &__save {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }

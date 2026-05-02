@@ -1,0 +1,253 @@
+.interviews {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 120px 0 56px;
+  color: #1d242f;
+}
+
+.interviews__header,
+.interviews__join,
+.interviews__meeting-header,
+.interviews__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.interviews__header {
+  margin-bottom: 28px;
+
+  h1 {
+    margin: 8px 0;
+    font-size: 38px;
+    line-height: 1.15;
+  }
+
+  p {
+    margin: 0;
+    color: #637083;
+  }
+}
+
+.interviews__eyebrow {
+  color: #0b7a75;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.interviews__join {
+  padding: 24px;
+  border: 1px solid #dfe5ec;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(23, 34, 49, 0.07);
+
+  h2 {
+    margin: 0 0 8px;
+    font-size: 22px;
+  }
+
+  p {
+    margin: 0;
+    color: #637083;
+  }
+}
+
+.interviews__join-form {
+  display: flex;
+  gap: 12px;
+  width: min(100%, 520px);
+
+  input {
+    flex: 1;
+    min-width: 0;
+    height: 46px;
+    border: 1px solid #cfd8e3;
+    border-radius: 6px;
+    padding: 0 14px;
+    color: #1d242f;
+    font-size: 15px;
+    outline: none;
+
+    &:focus {
+      border-color: #0b7a75;
+      box-shadow: 0 0 0 3px rgba(11, 122, 117, 0.14);
+    }
+  }
+}
+
+.interviews__join-form button,
+.interviews__card button,
+.interviews__secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border: 0;
+  border-radius: 6px;
+  padding: 0 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.interviews__join-form button,
+.interviews__card button {
+  background: #0b7a75;
+  color: #ffffff;
+
+  &:hover {
+    background: #09625e;
+    box-shadow: 0 10px 22px rgba(11, 122, 117, 0.2);
+    transform: translateY(-1px);
+  }
+}
+
+.interviews__secondary-button {
+  border: 1px solid #cfd8e3;
+  background: #ffffff;
+  color: #263241;
+
+  &:hover {
+    background: #f4f7fa;
+  }
+}
+
+.interviews__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.interviews__card {
+  min-height: 126px;
+  padding: 20px;
+  border: 1px solid #dfe5ec;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.interviews__card-icon {
+  display: grid;
+  flex: 0 0 50px;
+  width: 50px;
+  height: 50px;
+  place-items: center;
+  border-radius: 8px;
+  background: #edf8f7;
+  color: #0b7a75;
+  font-size: 20px;
+}
+
+.interviews__card-content {
+  flex: 1;
+  min-width: 0;
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+  }
+
+  p {
+    margin: 0 0 8px;
+    color: #637083;
+  }
+
+  span {
+    color: #293545;
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+
+.interviews__meeting {
+  overflow: hidden;
+  border: 1px solid #dfe5ec;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(23, 34, 49, 0.07);
+}
+
+.interviews__meeting-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid #dfe5ec;
+
+  h2 {
+    margin: 4px 0 0;
+    font-size: 22px;
+  }
+}
+
+.interviews__room-name {
+  max-width: 50%;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #f4f7fa;
+  padding: 8px 10px;
+  color: #425168;
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.interviews__jitsi-frame {
+  height: min(72vh, 760px);
+  min-height: 520px;
+  background: #111827;
+}
+
+@media (max-width: 820px) {
+  .interviews {
+    width: min(100% - 28px, 1180px);
+    padding-top: 96px;
+  }
+
+  .interviews__header,
+  .interviews__join,
+  .interviews__meeting-header,
+  .interviews__card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .interviews__header h1 {
+    font-size: 32px;
+  }
+
+  .interviews__join-form {
+    width: 100%;
+  }
+
+  .interviews__list {
+    grid-template-columns: 1fr;
+  }
+
+  .interviews__card button {
+    width: 100%;
+  }
+
+  .interviews__room-name {
+    max-width: 100%;
+  }
+
+  .interviews__jitsi-frame {
+    height: 68vh;
+    min-height: 420px;
+  }
+}
+
+@media (max-width: 560px) {
+  .interviews__join-form {
+    flex-direction: column;
+  }
+
+  .interviews__join-form button {
+    width: 100%;
+  }
+}
