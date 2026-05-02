@@ -55,6 +55,35 @@
   flex-wrap: wrap;
 }
 
+.hire-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #e7dfd4;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  color: #7a746d;
+  cursor: pointer;
+  transition: 0.15s ease;
+  font-family: inherit;
+
+  &:hover { border-color: #c8c2bb; color: #111111; }
+  &.active { background: #fdd535; border-color: #fdd535; color: #111111; font-weight: 600; }
+}
+
+.hire-tab-count {
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  padding: 1px 6px;
+
+  .hire-tab.active & { background: rgba(0, 0, 0, 0.12); }
+}
+
 // ── Grid ─────────────────────────────────────────────────────────
 .hire-listings-grid {
   display: grid;
@@ -88,7 +117,7 @@
   transition: box-shadow 0.2s, border-color 0.2s, transform 0.18s;
 
   &:hover {
-    border-color: #fdd535;
+    border-color: #d4cdc5;
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
   }
@@ -197,7 +226,7 @@
     svg { font-size: 11px; color: #b0a89e; }
     &:hover { background: #f7f4f0; }
 
-    &.menu-resume { color: #18a87a; svg { color: #18a87a; } }
+    &.menu-resume { color: #2d7a5a; svg { color: #2d7a5a; } }
     &.menu-danger {
       color: #bf1603;
       svg { color: #bf1603; }
@@ -240,22 +269,23 @@
 }
 
 .hire-listing-type-tag {
-  background: #fdd535;
-  color: #111111;
+  background: #f2efea;
+  color: #555050;
   border-radius: 999px;
   padding: 3px 10px;
   font-size: 11.5px;
-  font-weight: 700;
+  font-weight: 600;
+  border: 1px solid #e7dfd4;
 }
 
 .hire-listing-status-pill {
   padding: 3px 10px;
   border-radius: 999px;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
 
-  &.pill-active { background: #e6f4ec; color: #18a87a; border: 1px solid #b3e6ce; }
-  &.pill-paused { background: #fff8e1; color: #b88a00; border: 1px solid #f5d87a; }
+  &.pill-active { background: #eef7f2; color: #2d7a5a; border: 1px solid #c2e0d4; }
+  &.pill-paused { background: #fef9ec; color: #9a7000; border: 1px solid #edd98a; }
   &.pill-closed { background: #f2efea; color: #9e9890; border: 1px solid #e7dfd4; }
 }
 
@@ -298,7 +328,7 @@
 
 .hire-listing-pipe-fill {
   height: 100%;
-  background: #fdd535;
+  background: linear-gradient(90deg, #f5cb00, #fdd535);
   border-radius: 999px;
   transition: width 0.5s ease;
 }
@@ -340,9 +370,9 @@
     border-radius: 50%;
   }
 
-  &.blue   { color: #3b5bdb; &::before { background: #3b5bdb; } }
-  &.yellow { color: #b88a00; &::before { background: #fdd535; } }
-  &.green  { color: #18a87a; &::before { background: #18a87a; } }
+  &.blue   { color: #9a7000; &::before { background: #fdd535; } }
+  &.yellow { color: #9a7000; &::before { background: #fdd535; } }
+  &.green  { color: #2d7a5a; &::before { background: #2d7a5a; } }
   &.muted  {
     color: #b0a89e;
     font-weight: 400;

@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import { JitsiMeeting } from '@jitsi/react-sdk';
 import { FaCalendarAlt, FaExternalLinkAlt, FaMapMarkerAlt, FaPlus, FaVideo } from 'react-icons/fa';
 import './HireDashboardInterviews.scss';
 import { useHireDashboard } from '../../../HireDashboardContext';
@@ -158,16 +157,11 @@ const HireDashboardInterviews = () => {
           </div>
 
           <div className="hire-interviews-jitsi-frame">
-            <JitsiMeeting
-              domain="meet.jit.si"
-              roomName={activeRoom}
-              configOverwrite={{ disableDeepLinking: true, prejoinPageEnabled: true }}
-              interfaceConfigOverwrite={{ SHOW_JITSI_WATERMARK: false }}
-              getIFrameRef={(iframeRef) => {
-                iframeRef.style.height = '100%';
-                iframeRef.style.width = '100%';
-              }}
-              onReadyToClose={() => setActiveRoom('')}
+            <iframe
+              src={`https://meet.jit.si/${activeRoom}`}
+              allow="camera; microphone; fullscreen; display-capture"
+              style={{ width: '100%', height: '100%', border: 'none' }}
+              title={activeRoomTitle || activeRoom}
             />
           </div>
         </div>
