@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { FaCalendarAlt, FaExternalLinkAlt, FaMapMarkerAlt, FaPlus, FaVideo } from 'react-icons/fa';
 import './HireDashboardInterviews.scss';
+import { useHireDashboard } from '../../../HireDashboardContext';
 
 const interviewsData = [
   { id: 1, initials: 'AR', name: 'Alex Rivera',     email: 'alex.rivera@example.com',     role: 'Senior Frontend Developer', date: 'Today, 2:00 PM',     interviewer: 'Sarah K.',  status: 'Scheduled', roomName: 'alex-rivera-frontend-interview' },
@@ -33,8 +35,99 @@ const HireDashboardInterviews = () => {
   const [copyState, setCopyState] = useState('');
 
   const filtered = activeTab === 'All'
-    ? interviewsData
-    : interviewsData.filter((i) => i.status === activeTab);
+    ? interviews
+    : interviews.filter((i) => i.status === activeTab);
+
+  const activeRoomTitle = useMemo(() => (
+    activeRoom ? formatRoomTitle(activeRoom) : ''
+  ), [activeRoom]);
+
+  // Build a candidate key from applicationsData (id is a number; use string for option value)
+  const selectedCandidate = shortlistedCandidates.find((c) => String(c.id) === form.candidateId) || null;
+
+  const joinRoom = (name) => {
+    const normalized = normalizeRoomName(name);
+    if (!normalized) return;
+    setActiveRoom(normalized);
+  };
+
+  const handleFormChange = (field, value) => {
+    setForm((prev) => {
+      const next = { ...prev, [field]: value };
+
+      if (field === 'candidateId' && value) {
+        const candidate = shortlistedCandidates.find((c) => String(c.id) === value);
+        if (candidate) {
+          next.roomName = normalizeRoomName(`${candidate.name} ${candidate.role}`);
+        }
+      }
+
+      return next;
+    });
+  };
+
+  const handleSchedule = (e) => {
+    e.preventDefault();
+    const { candidateId, date, time, interviewer, type, roomName, location } = form;
+    if (!candidateId || !date || !time) return;
+
+    const candidate = shortlistedCandidates.find((c) => String(c.id) === candidateId);
+    if (!candidate) return;
+
+    const newInterview = {
+      id: Date.now(),
+      initials: candidate.initials || getInitials(candidate.name),
+      name: candidate.name,
+      role: candidate.role,
+      date: formatDateTime(date, time),
+      interviewer,
+      status: 'Scheduled',
+      type,
+      ...(type === 'video'
+        ? { roomName: normalizeRoomName(roomName || `${candidate.name} ${candidate.role}`) }
+        : { location: location.trim() || 'TBD' }),
+    };
+
+    setInterviews((prev) => [newInterview, ...prev]);
+    setActiveTab('All');
+    setShowModal(false);
+    setForm(EMPTY_FORM);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setForm(EMPTY_FORM);
+  };
+
+  if (activeRoom) {
+    return (
+      <section className="hire-dashboard-interviews-section">
+        <div className="hire-interviews-wrapper">
+          <div className="hire-interviews-meeting-header">
+            <div>
+              <span className="hire-interviews-eyebrow">Live room</span>
+              <h2>{activeRoomTitle || activeRoom}</h2>
+            </div>
+            <div className="hire-interviews-meeting-meta">
+              <span className="hire-interviews-room-tag">{activeRoom}</span>
+              <button className="hire-interviews-back-btn" type="button" onClick={() => setActiveRoom('')}>
+                Back to interviews
+              </button>
+            </div>
+          </div>
+
+          <div className="hire-interviews-jitsi-frame">
+            <iframe
+              src={`https://meet.jit.si/${activeRoom}`}
+              allow="camera; microphone; fullscreen; display-capture"
+              style={{ width: '100%', height: '100%', border: 'none' }}
+              title={activeRoomTitle || activeRoom}
+            />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const getInviteLink = (roomName) => `${window.location.origin}/interviews/${encodeURIComponent(roomName)}`;
 
@@ -87,22 +180,106 @@ const HireDashboardInterviews = () => {
   };
 
   return (
-    <section className="hire-dashboard-interviews-section">
-      <div className="hire-interviews-wrapper">
-        <div className="hire-interviews-header">
-          <h2>Interviews</h2>
-          <div className="hire-interviews-tabs">
-            {tabs.map((tab) => (
-              <button
-                key={tab}
-                className={activeTab === tab ? 'hire-tab active' : 'hire-tab'}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
+    <>
+      <section className="hire-dashboard-interviews-section">
+        <div className="hire-interviews-wrapper">
+          <div className="hire-interviews-header">
+            <div>
+              <span className="hire-interviews-eyebrow">Video &amp; In-Person Interviews</span>
+              <h2>Interviews</h2>
+            </div>
+            <div className="hire-interviews-header-actions">
+              <div className="hire-interviews-tabs">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab}
+                    className={activeTab === tab ? 'hire-tab active' : 'hire-tab'}
+                    onClick={() => setActiveTab(tab)}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+              <button className="hire-interviews-schedule-btn" type="button" onClick={() => setShowModal(true)}>
+                <FaPlus aria-hidden="true" />
+                Schedule interview
               </button>
+            </div>
+          </div>
+
+          <div className="hire-interviews-join">
+            <div>
+              <h3>Start or join a video room</h3>
+              <p>Use a shared room name so both participants enter the same call.</p>
+            </div>
+            <form
+              className="hire-interviews-join-form"
+              onSubmit={(e) => { e.preventDefault(); joinRoom(customRoomName); }}
+            >
+              <input
+                type="text"
+                value={customRoomName}
+                onChange={(e) => setCustomRoomName(e.target.value)}
+                placeholder="interview-room-name"
+                aria-label="Interview room name"
+              />
+              <button type="submit">
+                <FaVideo aria-hidden="true" />
+                Join room
+              </button>
+            </form>
+          </div>
+
+          <div className="hire-interviews-list">
+            {filtered.length === 0 && (
+              <p className="hire-interviews-empty">No {activeTab.toLowerCase()} interviews.</p>
+            )}
+            {filtered.map((item) => (
+              <div key={item.id} className="hire-interview-row">
+                <div className="hire-interview-initials">{item.initials}</div>
+
+                <div className="hire-interview-info">
+                  <div className="hire-interview-name">{item.name}</div>
+                  <div className="hire-interview-role">{item.role}</div>
+                </div>
+
+                <span className={`hire-interview-type-badge type-${item.type}`}>
+                  {item.type === 'video' ? <FaVideo aria-hidden="true" /> : <FaMapMarkerAlt aria-hidden="true" />}
+                  {item.type === 'video' ? 'Video' : 'In-person'}
+                </span>
+
+                <div className="hire-interview-date">
+                  <FaCalendarAlt aria-hidden="true" />
+                  {item.date}
+                </div>
+
+                {item.type === 'physical' && item.location && (
+                  <div className="hire-interview-location">
+                    <FaMapMarkerAlt aria-hidden="true" />
+                    {item.location}
+                  </div>
+                )}
+
+                <div className="hire-interview-interviewer">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  {item.interviewer}
+                </div>
+
+                <div className={`hire-interview-status status-${item.status.toLowerCase()}`}>
+                  {item.status}
+                </div>
+
+                {item.status === 'Scheduled' && item.type === 'video' && item.roomName && (
+                  <button className="hire-interview-join-btn" type="button" onClick={() => joinRoom(item.roomName)}>
+                    <FaExternalLinkAlt aria-hidden="true" />
+                    Join
+                  </button>
+                )}
+              </div>
             ))}
           </div>
         </div>
+      </section>
 
         <form className="hire-interview-invite-panel" onSubmit={handleCreateInvite}>
           <div className="hire-interview-invite-copy">
@@ -188,12 +365,71 @@ const HireDashboardInterviews = () => {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 {item.date}
               </div>
-              <div className="hire-interview-interviewer">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                {item.interviewer}
+
+              <div className="hire-modal-row">
+                <label className="hire-modal-label">
+                  Date
+                  <input
+                    type="date"
+                    value={form.date}
+                    onChange={(e) => handleFormChange('date', e.target.value)}
+                    required
+                  />
+                </label>
+                <label className="hire-modal-label">
+                  Time
+                  <input
+                    type="time"
+                    value={form.time}
+                    onChange={(e) => handleFormChange('time', e.target.value)}
+                    required
+                  />
+                </label>
               </div>
-              <div className={`hire-interview-status status-${item.status.toLowerCase()}`}>
-                {item.status}
+
+              <label className="hire-modal-label">
+                Interviewer
+                <select
+                  value={form.interviewer}
+                  onChange={(e) => handleFormChange('interviewer', e.target.value)}
+                >
+                  {INTERVIEWERS.map((name) => (
+                    <option key={name} value={name}>{name}</option>
+                  ))}
+                </select>
+              </label>
+
+              {form.type === 'video' ? (
+                <label className="hire-modal-label">
+                  Room name
+                  <input
+                    type="text"
+                    placeholder={selectedCandidate ? normalizeRoomName(`${selectedCandidate.name} ${selectedCandidate.role}`) : 'auto-generated'}
+                    value={form.roomName}
+                    onChange={(e) => handleFormChange('roomName', e.target.value)}
+                  />
+                </label>
+              ) : (
+                <label className="hire-modal-label">
+                  Location
+                  <input
+                    type="text"
+                    placeholder="e.g. Office – Room 3A"
+                    value={form.location}
+                    onChange={(e) => handleFormChange('location', e.target.value)}
+                  />
+                </label>
+              )}
+
+              <div className="hire-modal-actions">
+                <button type="button" className="hire-modal-cancel" onClick={closeModal}>Cancel</button>
+                <button
+                  type="submit"
+                  className="hire-modal-submit"
+                  disabled={shortlistedCandidates.length === 0}
+                >
+                  Schedule
+                </button>
               </div>
               <div className="hire-interview-actions">
                 <button type="button" onClick={() => copyInviteLink(getInviteLink(item.roomName))}>
@@ -218,8 +454,8 @@ const HireDashboardInterviews = () => {
             </div>
           ))}
         </div>
-      </div>
-    </section>
+      )}
+    </>
   );
 };
 

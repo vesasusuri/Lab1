@@ -20,6 +20,8 @@ Route::view('/hire-dashboard/analytics', 'welcome');
 Route::view('/hire-dashboard/settings', 'welcome');
 Route::view('/hire-dashboard/applications', 'welcome');
 Route::view('/hire-dashboard/listings', 'welcome');
+Route::view('/hire-dashboard/messages', 'welcome');
+Route::view('/hire-dashboard/team', 'welcome');
 Route::view('/about-us', 'welcome');
 Route::view('/companies', 'welcome');
 Route::view('/companies/{any}', 'welcome')->where('any', '.*');
@@ -30,12 +32,14 @@ Route::view('/login', 'welcome')->name('login');
 Route::view('/signup', 'welcome')->name('signup');
 Route::view('/jobs/{any}', 'welcome');
 Route::view('/dashboard', 'welcome');
+Route::view('/profile', 'welcome');
 Route::view('/applied-jobs', 'welcome');
 Route::view('/unfinished-jobs', 'welcome');
 Route::view('/saved-jobs', 'welcome');
 Route::view('/interviews', 'welcome');
 Route::view('/interviews/{roomName}', 'welcome');
-
+Route::view('/messages', 'welcome');
+Route::view('/resume', 'welcome');
 
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
