@@ -22,6 +22,7 @@ import ProfilePage from './views/User-View/pages/User-Dashboard/ProfilePage/Prof
 import MessagesPage from './views/User-View/pages/User-Dashboard/Messages/Messagespage';
 import UserViewLayout from './views/User-View/UserViewLayout';
 import HRViewLayout from './views/HR-View/HRViewLayout';
+import AdminViewLayout from './views/Admin-View/AdminViewLayout';
 import HireDashboardPage from './views/HR-View/pages/HireDashboard/HireDashboard';
 import HireDashboardInterviewsPage from './views/HR-View/pages/HireDashboardInterviewsPage/HireDashboardInterviewsPage';
 import HireDashboardHiresPage from './views/HR-View/pages/HireDashboardHiresPage/HireDashboardHiresPage';
@@ -32,6 +33,14 @@ import HireDashboardListingsPage from './views/HR-View/pages/HireDashboardListin
 import HireDashboardMessagesPage from './views/HR-View/pages/HireDashboardMessagesPage/HireDashboardMessagesPage';
 import HireDashboardTeamPage from './views/HR-View/pages/HireDashboardTeamPage/HireDashboardTeamPage';
 import ResumePage from './views/User-View/pages/User-Dashboard/Resume/ResumePage';
+import AdminDashboardOverviewPage from './views/Admin-View/pages/AdminDashboardOverviewPage/AdminDashboardOverviewPage';
+import AdminDashboardContentPage from './views/Admin-View/pages/AdminDashboardContentPage/AdminDashboardContentPage';
+import AdminDashboardUsersPage from './views/Admin-View/pages/AdminDashboardUsersPage/AdminDashboardUsersPage';
+import AdminDashboardSettingsPage from './views/Admin-View/pages/AdminDashboardSettingsPage/AdminDashboardSettingsPage';
+import AdminDashboardLogsPage from './views/Admin-View/pages/AdminDashboardLogsPage/AdminDashboardLogsPage';
+import AdminDashboardReportsPage from './views/Admin-View/pages/AdminDashboardReportsPage/AdminDashboardReportsPage';
+import AdminActivityTracker from './views/Admin-View/components/shared/AdminActivityTracker';
+import { PlatformAdminProvider } from './context/PlatformAdminContext';
 
 export default function App() {
     useEffect(() => {
@@ -39,7 +48,9 @@ export default function App() {
     }, [])
     return (
         <IntlProvider locale="en" messages={{}}>
+            <PlatformAdminProvider>
             <BrowserRouter>
+                <AdminActivityTracker />
                 <Routes>
                     <Route element={<UserViewLayout />}>
                         <Route path="/" element={<Home />} />
@@ -74,8 +85,18 @@ export default function App() {
                         <Route path="/hire-dashboard/messages" element={<HireDashboardMessagesPage />} />
                         <Route path="/hire-dashboard/team" element={<HireDashboardTeamPage />} />
                     </Route>
+
+                    <Route element={<AdminViewLayout />}>
+                        <Route path="/admin-dashboard" element={<AdminDashboardOverviewPage />} />
+                        <Route path="/admin-dashboard/content" element={<AdminDashboardContentPage />} />
+                        <Route path="/admin-dashboard/users" element={<AdminDashboardUsersPage />} />
+                        <Route path="/admin-dashboard/reports" element={<AdminDashboardReportsPage />} />
+                        <Route path="/admin-dashboard/logs" element={<AdminDashboardLogsPage />} />
+                        <Route path="/admin-dashboard/settings" element={<AdminDashboardSettingsPage />} />
+                    </Route>
                 </Routes>
             </BrowserRouter>
+            </PlatformAdminProvider>
         </IntlProvider>
     );
 }
