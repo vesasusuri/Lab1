@@ -1,24 +1,46 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowRight, FaLocationDot, FaUsers } from 'react-icons/fa6';
+import { usePlatformAdmin } from "../../../../../context/PlatformAdminContext";
 import './companiesCards.scss';
 
-import {companies} from "./data.js";
+import { companies as companiesFallback } from "./data.js";
 
 const CompaniesCards = () => {
+    const { data } = usePlatformAdmin();
+    const homeContent = data.homeContent || {};
+    const section = (data.homeSections || []).find((s) => s.key === "companies_cards");
+
+    const companies = useMemo(() => {
+        const raw = (section?.items || []).filter((item) => item.isActive !== false);
+        if (raw.length === 0) {
+            return companiesFallback;
+        }
+        return raw.map((item) => ({
+            id: item.metadata?.companyId ?? item.id,
+            name: item.title || 'Company',
+            logo: item.imageUrl,
+            employees: item.metadata?.employees || '—',
+            location: item.metadata?.location || '—',
+            openRoles: item.metadata?.openRoles || '—',
+            industry: item.subtitle || '—',
+            description: item.description || '',
+        }));
+    }, [section]);
+
     return (
         <section className="companies-section" >
             <div className="companies-section-header" data-aos="fade-up">
                 <div>
-                    <p className="companies-section-eyebrow">Top employers</p>
-                    <h2 className="companies-section-title">Discover companies hiring right now</h2>
+                    <p className="companies-section-eyebrow">{homeContent.companiesEyebrow || 'Top employers'}</p>
+                    <h2 className="companies-section-title">{homeContent.companiesTitle || 'Discover companies hiring right now'}</h2>
                     <p className="companies-section-description">
-                        Explore standout companies, compare team size and location, and find the places where your next role could start.
+                        {homeContent.companiesDescription || 'Explore standout companies, compare team size and location, and find the places where your next role could start.'}
                     </p>
                 </div>
 
                 <a href="/companies" className="companies-section-link">
-                    Browse companies <FaArrowRight aria-hidden />
+                    {homeContent.companiesCta || 'Browse companies'} <FaArrowRight aria-hidden />
                 </a>
             </div>
 
