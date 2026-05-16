@@ -54,9 +54,14 @@ export const PlatformAdminProvider = ({ children }) => {
         const payload = await homeApi.getHomePagePayload();
         const serverHomeContent = payload?.homeContent;
         const serverHomeSections = payload?.homeSections;
-        if ((!serverHomeContent && !serverHomeSections) || cancelled) return;
+        const serverPageContent = payload?.pageContent;
+        if ((!serverHomeContent && !serverHomeSections && !serverPageContent) || cancelled) return;
 
         setData((current) => {
+          const nextPageContent = mergePageContent({
+            ...current.pageContent,
+            ...(serverPageContent || {}),
+          }, serverHomeContent);
           const next = {
             ...current,
             homeContent: {
@@ -66,13 +71,7 @@ export const PlatformAdminProvider = ({ children }) => {
             homeSections: Array.isArray(serverHomeSections) && serverHomeSections.length > 0
               ? serverHomeSections
               : current.homeSections,
-            pageContent: {
-              ...current.pageContent,
-              home: {
-                ...current.pageContent?.home,
-                ...serverHomeContent,
-              },
-            },
+            pageContent: nextPageContent,
           };
 
           if (typeof window !== 'undefined') {
@@ -134,7 +133,7 @@ export const PlatformAdminProvider = ({ children }) => {
     persist(optimisticState);
 
     try {
-      const payload = await homeApi.putHomePageContent(nextHomeContent);
+      const payload = await homeApi.putHomePageContent(nextHomeContent, 'home');
       if (!payload?.homeContent) return;
 
       persist({
@@ -142,6 +141,7 @@ export const PlatformAdminProvider = ({ children }) => {
         homeContent: payload.homeContent,
         pageContent: {
           ...optimisticState.pageContent,
+          ...(payload.pageContent || {}),
           home: payload.homeContent,
         },
       });
@@ -189,10 +189,11 @@ export const PlatformAdminProvider = ({ children }) => {
           ...(payload?.homeContent
             ? {
                 homeContent: { ...current.homeContent, ...payload.homeContent },
-                pageContent: {
+                pageContent: mergePageContent({
                   ...current.pageContent,
+                  ...(payload.pageContent || {}),
                   home: { ...current.pageContent?.home, ...payload.homeContent },
-                },
+                }, payload.homeContent),
               }
             : {}),
           ...(Array.isArray(payload?.homeSections) ? { homeSections: payload.homeSections } : {}),
@@ -251,11 +252,29 @@ export const PlatformAdminProvider = ({ children }) => {
       },
     };
 
-    persist({
+    const optimisticState = {
       ...data,
       pageContent: nextPageContent,
       homeContent: pageKey === 'home' ? nextPageContent.home : data.homeContent,
-    });
+    };
+    persist(optimisticState);
+
+    if (pageKey === 'companies') {
+      try {
+        const payload = await homeApi.putHomePageContent(nextPageContent.companies, 'companies');
+        if (!payload?.pageContent?.companies) return;
+
+        persist({
+          ...optimisticState,
+          pageContent: {
+            ...optimisticState.pageContent,
+            ...payload.pageContent,
+          },
+          ...(payload.homeContent ? { homeContent: payload.homeContent } : {}),
+        });
+      } catch {
+      }
+    }
   };
 
   const addActivityLog = (record) => {

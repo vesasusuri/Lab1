@@ -25,6 +25,12 @@ class HomePageContentController extends Controller
         'companies_title' => 'Discover companies hiring right now',
         'companies_description' => 'Explore standout companies, compare team size and location, and find the places where your next role could start.',
         'companies_cta' => 'Browse companies',
+        'companies_page_hero_eyebrow' => 'Companies',
+        'companies_page_hero_title' => 'Discover companies hiring right now',
+        'companies_page_hero_description' => 'Compare employers, learn about their teams, and find the place where your next role could start.',
+        'companies_page_featured_title' => 'Featured companies',
+        'companies_page_featured_description' => 'A curated list of employers actively looking for new talent.',
+        'companies_page_primary_cta' => 'Browse companies',
         'find_job_title' => 'Find Your Next Opportunity',
         'find_job_highlight' => 'Opportunity',
         'find_job_description' => 'Browse 20+ open positions across top companies. Your dream job is one search away.',
@@ -80,12 +86,12 @@ class HomePageContentController extends Controller
             'is_active' => true,
             'sort_order' => 4,
             'items' => [
-                ['title' => 'NFON', 'description' => 'Build scalable communication tools used by modern distributed teams.', 'subtitle' => 'Cloud Communications', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=NFON', 'image_alt' => 'NFON', 'metadata' => ['companyId' => 1, 'employees' => '900+ employees', 'location' => 'Prizren, Kosovo', 'openRoles' => '12 open roles'], 'sort_order' => 1, 'is_active' => true],
-                ['title' => 'Outsorcy', 'description' => 'Fast-moving support and operations teams with strong growth across Europe.', 'subtitle' => 'Outsourcing & Support', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=Outsorcy', 'image_alt' => 'Outsorcy', 'metadata' => ['companyId' => 2, 'employees' => '150+ employees', 'location' => 'Pristina, Kosovo', 'openRoles' => '8 open roles'], 'sort_order' => 2, 'is_active' => true],
-                ['title' => 'Borek', 'description' => 'Well-known regional brand expanding its operations, logistics, and customer teams.', 'subtitle' => 'Food & Retail', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=Borek', 'image_alt' => 'Borek', 'metadata' => ['companyId' => 3, 'employees' => '300+ employees', 'location' => 'Prizren, Kosovo', 'openRoles' => '6 open roles'], 'sort_order' => 3, 'is_active' => true],
-                ['title' => 'Munda', 'description' => 'Product-focused company shipping design and development work for international clients.', 'subtitle' => 'Digital Product Studio', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=Munda', 'image_alt' => 'Munda', 'metadata' => ['companyId' => 4, 'employees' => '120+ employees', 'location' => 'Pristina, Kosovo', 'openRoles' => '5 open roles'], 'sort_order' => 4, 'is_active' => true],
-                ['title' => 'Speeex', 'description' => 'Remote-friendly teams building communication and localization services at speed.', 'subtitle' => 'Language Services', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=Speeex', 'image_alt' => 'Speeex', 'metadata' => ['companyId' => 5, 'employees' => '80+ employees', 'location' => 'Remote First', 'openRoles' => '4 open roles'], 'sort_order' => 5, 'is_active' => true],
-                ['title' => 'Shkolla Digjitale', 'description' => 'Education and technology teams helping the next generation build practical digital skills.', 'subtitle' => 'Education', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=ShD', 'image_alt' => 'Shkolla Digjitale', 'metadata' => ['companyId' => 6, 'employees' => '60+ employees', 'location' => 'Pristina, Kosovo', 'openRoles' => '7 open roles'], 'sort_order' => 6, 'is_active' => true],
+                ['title' => 'NFON', 'description' => 'Build scalable communication tools used by modern distributed teams.', 'subtitle' => 'Cloud Communications', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=NFON', 'image_alt' => 'NFON', 'metadata' => ['companyId' => 1, 'employees' => '900+ employees', 'location' => 'Prizren, Kosovo', 'openRoles' => '12 open roles', 'detailIntro' => 'Learn about NFON and read feedback shared by people who have worked there.', 'history' => 'NFON started as a cloud communications pioneer and quickly expanded into a trusted partner for modern business telephony. Their teams now support companies across Europe with secure and scalable collaboration solutions.', 'reviews' => [['id' => 1, 'author' => 'Ardita M.', 'role' => 'Frontend Developer', 'rating' => 5, 'comment' => 'Strong engineering culture, clear goals, and very supportive teammates.'], ['id' => 2, 'author' => 'Luan K.', 'role' => 'QA Engineer', 'rating' => 4, 'comment' => 'Good process and mentorship. Product ownership is taken seriously here.']]], 'sort_order' => 1, 'is_active' => true],
+                ['title' => 'Outsorcy', 'description' => 'Fast-moving support and operations teams with strong growth across Europe.', 'subtitle' => 'Outsourcing & Support', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=Outsorcy', 'image_alt' => 'Outsorcy', 'metadata' => ['companyId' => 2, 'employees' => '150+ employees', 'location' => 'Pristina, Kosovo', 'openRoles' => '8 open roles', 'detailIntro' => 'Learn about Outsorcy and read feedback shared by people who have worked there.', 'history' => 'Outsorcy began with a focus on operational excellence and customer support services. Over time, it has built multidisciplinary teams delivering scalable outsourcing solutions for international clients.', 'reviews' => [['id' => 1, 'author' => 'Blerim S.', 'role' => 'Operations Lead', 'rating' => 4, 'comment' => 'Clear communication and lots of opportunities to take initiative.'], ['id' => 2, 'author' => 'Rina A.', 'role' => 'Support Specialist', 'rating' => 5, 'comment' => 'Friendly culture and consistent training make onboarding very smooth.']]], 'sort_order' => 2, 'is_active' => true],
+                ['title' => 'Borek', 'description' => 'Well-known regional brand expanding its operations, logistics, and customer teams.', 'subtitle' => 'Food & Retail', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=Borek', 'image_alt' => 'Borek', 'metadata' => ['companyId' => 3, 'employees' => '300+ employees', 'location' => 'Prizren, Kosovo', 'openRoles' => '6 open roles', 'detailIntro' => 'Learn about Borek and read feedback shared by people who have worked there.', 'history' => 'Borek has evolved from a local food brand into a recognized regional name with growing retail and logistics operations. Its expansion is driven by reliable service and a customer-first approach.', 'reviews' => [['id' => 1, 'author' => 'Vesa T.', 'role' => 'Marketing Coordinator', 'rating' => 4, 'comment' => 'The brand is well-known and teams work closely across departments.']]], 'sort_order' => 3, 'is_active' => true],
+                ['title' => 'Munda', 'description' => 'Product-focused company shipping design and development work for international clients.', 'subtitle' => 'Digital Product Studio', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=Munda', 'image_alt' => 'Munda', 'metadata' => ['companyId' => 4, 'employees' => '120+ employees', 'location' => 'Pristina, Kosovo', 'openRoles' => '5 open roles', 'detailIntro' => 'Learn about Munda and read feedback shared by people who have worked there.', 'history' => 'Munda grew as a digital product studio focused on design and software delivery for international partners. It combines product thinking with engineering quality to build meaningful user experiences.', 'reviews' => [['id' => 1, 'author' => 'Arbnor J.', 'role' => 'UI/UX Designer', 'rating' => 5, 'comment' => 'Creative freedom and strong collaboration between design and dev teams.']]], 'sort_order' => 4, 'is_active' => true],
+                ['title' => 'Speeex', 'description' => 'Remote-friendly teams building communication and localization services at speed.', 'subtitle' => 'Language Services', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=Speeex', 'image_alt' => 'Speeex', 'metadata' => ['companyId' => 5, 'employees' => '80+ employees', 'location' => 'Remote First', 'openRoles' => '4 open roles', 'detailIntro' => 'Learn about Speeex and read feedback shared by people who have worked there.', 'history' => 'Speeex started as a language services team and expanded into a remote-first organization supporting multilingual communication worldwide. Flexibility and quality are central to its growth.', 'reviews' => [['id' => 1, 'author' => 'Jonida M.', 'role' => 'Localization Specialist', 'rating' => 5, 'comment' => 'Remote setup is excellent and communication stays very organized.']]], 'sort_order' => 5, 'is_active' => true],
+                ['title' => 'Shkolla Digjitale', 'description' => 'Education and technology teams helping the next generation build practical digital skills.', 'subtitle' => 'Education', 'image_url' => 'https://dummyimage.com/120x80/f3f4f6/111827&text=ShD', 'image_alt' => 'Shkolla Digjitale', 'metadata' => ['companyId' => 6, 'employees' => '60+ employees', 'location' => 'Pristina, Kosovo', 'openRoles' => '7 open roles', 'detailIntro' => 'Learn about Shkolla Digjitale and read feedback shared by people who have worked there.', 'history' => 'Shkolla Digjitale was founded to help students build practical digital skills through hands-on education. It now serves a broad community through modern learning programs and industry-focused training.', 'reviews' => [['id' => 1, 'author' => 'Besart F.', 'role' => 'Program Instructor', 'rating' => 5, 'comment' => 'Mission-driven environment where education and innovation go together.']]], 'sort_order' => 6, 'is_active' => true],
             ],
         ],
         [
@@ -199,6 +205,7 @@ class HomePageContentController extends Controller
 
         return response()->json([
             'homeContent' => $this->toFrontendShape($content),
+            'pageContent' => $this->toPageContentShape($content),
             'homeSections' => $this->sectionsToFrontendShape(),
         ]);
     }
@@ -206,6 +213,7 @@ class HomePageContentController extends Controller
     public function update(Request $request): JsonResponse
     {
         $validated = $request->validate([
+            '_pageKey' => ['nullable', 'string', 'in:home,companies'],
             'proofText' => ['nullable', 'string', 'max:255'],
             'heroTitle' => ['nullable', 'string', 'max:255'],
             'heroSubtitle' => ['nullable', 'string'],
@@ -217,6 +225,10 @@ class HomePageContentController extends Controller
             'companiesTitle' => ['nullable', 'string', 'max:255'],
             'companiesDescription' => ['nullable', 'string'],
             'companiesCta' => ['nullable', 'string', 'max:255'],
+            'heroEyebrow' => ['nullable', 'string', 'max:255'],
+            'heroDescription' => ['nullable', 'string'],
+            'featuredTitle' => ['nullable', 'string', 'max:255'],
+            'featuredDescription' => ['nullable', 'string'],
             'findJobTitle' => ['nullable', 'string', 'max:255'],
             'findJobHighlight' => ['nullable', 'string', 'max:255'],
             'findJobDescription' => ['nullable', 'string'],
@@ -224,29 +236,42 @@ class HomePageContentController extends Controller
         ]);
 
         $content = $this->ensureDefaultContent();
+        $pageKey = $validated['_pageKey'] ?? 'home';
 
-        $content->fill([
-            'proof_text' => $validated['proofText'] ?? $content->proof_text,
-            'hero_title' => $validated['heroTitle'] ?? $content->hero_title,
-            'hero_subtitle' => $validated['heroSubtitle'] ?? $content->hero_subtitle,
-            'primary_cta' => $validated['primaryCta'] ?? $content->primary_cta,
-            'secondary_cta' => $validated['secondaryCta'] ?? $content->secondary_cta,
-            'categories_title' => $validated['categoriesTitle'] ?? $content->categories_title,
-            'categories_cta' => $validated['categoriesCta'] ?? $content->categories_cta,
-            'companies_eyebrow' => $validated['companiesEyebrow'] ?? $content->companies_eyebrow,
-            'companies_title' => $validated['companiesTitle'] ?? $content->companies_title,
-            'companies_description' => $validated['companiesDescription'] ?? $content->companies_description,
-            'companies_cta' => $validated['companiesCta'] ?? $content->companies_cta,
-            'find_job_title' => $validated['findJobTitle'] ?? $content->find_job_title,
-            'find_job_highlight' => $validated['findJobHighlight'] ?? $content->find_job_highlight,
-            'find_job_description' => $validated['findJobDescription'] ?? $content->find_job_description,
-            'find_job_cta' => $validated['findJobCta'] ?? $content->find_job_cta,
-        ]);
+        if ($pageKey === 'companies') {
+            $content->fill([
+                'companies_page_hero_eyebrow' => $validated['heroEyebrow'] ?? $content->companies_page_hero_eyebrow,
+                'companies_page_hero_title' => $validated['heroTitle'] ?? $content->companies_page_hero_title,
+                'companies_page_hero_description' => $validated['heroDescription'] ?? $content->companies_page_hero_description,
+                'companies_page_featured_title' => $validated['featuredTitle'] ?? $content->companies_page_featured_title,
+                'companies_page_featured_description' => $validated['featuredDescription'] ?? $content->companies_page_featured_description,
+                'companies_page_primary_cta' => $validated['primaryCta'] ?? $content->companies_page_primary_cta,
+            ]);
+        } else {
+            $content->fill([
+                'proof_text' => $validated['proofText'] ?? $content->proof_text,
+                'hero_title' => $validated['heroTitle'] ?? $content->hero_title,
+                'hero_subtitle' => $validated['heroSubtitle'] ?? $content->hero_subtitle,
+                'primary_cta' => $validated['primaryCta'] ?? $content->primary_cta,
+                'secondary_cta' => $validated['secondaryCta'] ?? $content->secondary_cta,
+                'categories_title' => $validated['categoriesTitle'] ?? $content->categories_title,
+                'categories_cta' => $validated['categoriesCta'] ?? $content->categories_cta,
+                'companies_eyebrow' => $validated['companiesEyebrow'] ?? $content->companies_eyebrow,
+                'companies_title' => $validated['companiesTitle'] ?? $content->companies_title,
+                'companies_description' => $validated['companiesDescription'] ?? $content->companies_description,
+                'companies_cta' => $validated['companiesCta'] ?? $content->companies_cta,
+                'find_job_title' => $validated['findJobTitle'] ?? $content->find_job_title,
+                'find_job_highlight' => $validated['findJobHighlight'] ?? $content->find_job_highlight,
+                'find_job_description' => $validated['findJobDescription'] ?? $content->find_job_description,
+                'find_job_cta' => $validated['findJobCta'] ?? $content->find_job_cta,
+            ]);
+        }
         $content->save();
 
         return response()->json([
             'message' => 'Home page content updated successfully.',
             'homeContent' => $this->toFrontendShape($content),
+            'pageContent' => $this->toPageContentShape($content),
         ]);
     }
 
@@ -384,12 +409,39 @@ class HomePageContentController extends Controller
         ];
     }
 
+    private function toPageContentShape(HomePageContent $content): array
+    {
+        return [
+            'home' => $this->toFrontendShape($content),
+            'companies' => [
+                'heroEyebrow' => $content->companies_page_hero_eyebrow,
+                'heroTitle' => $content->companies_page_hero_title,
+                'heroDescription' => $content->companies_page_hero_description,
+                'featuredTitle' => $content->companies_page_featured_title,
+                'featuredDescription' => $content->companies_page_featured_description,
+                'primaryCta' => $content->companies_page_primary_cta,
+            ],
+        ];
+    }
+
     private function ensureDefaultContent(): HomePageContent
     {
         $content = HomePageContent::query()->first();
 
         if (!$content) {
             $content = HomePageContent::query()->create(self::DEFAULT_CONTENT);
+        }
+
+        $missingDefaults = [];
+        foreach (self::DEFAULT_CONTENT as $key => $value) {
+            if ($content->{$key} === null) {
+                $missingDefaults[$key] = $value;
+            }
+        }
+
+        if (!empty($missingDefaults)) {
+            $content->fill($missingDefaults);
+            $content->save();
         }
 
         return $content;
@@ -408,6 +460,26 @@ class HomePageContentController extends Controller
             );
 
             if ($section->items()->count() > 0) {
+                if ($sectionSeed['key'] === 'companies_cards') {
+                    foreach ($sectionSeed['items'] as $itemSeed) {
+                        $item = $section->items()
+                            ->where('title', $itemSeed['title'])
+                            ->first();
+
+                        if (!$item) {
+                            continue;
+                        }
+
+                        $metadata = $item->metadata ?? [];
+                        $seedMetadata = $itemSeed['metadata'] ?? [];
+                        $nextMetadata = array_replace_recursive($seedMetadata, $metadata);
+
+                        if ($nextMetadata !== $metadata) {
+                            $item->metadata = $nextMetadata;
+                            $item->save();
+                        }
+                    }
+                }
                 continue;
             }
 

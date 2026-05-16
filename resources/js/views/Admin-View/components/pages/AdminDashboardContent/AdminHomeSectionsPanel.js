@@ -57,10 +57,13 @@ const AdminHomeSectionsPanel = ({
   uploadHomeSectionImage,
   createHomeSectionItem,
   deleteHomeSectionItem,
+  groups = GROUPS,
+  heading = 'Home page sections',
+  description = 'Edit by area below. Save writes everything to the database. Add / Remove runs immediately.',
 }) => {
   const [uploadingKey, setUploadingKey] = useState('');
-  const [activeGroupId, setActiveGroupId] = useState(GROUPS[0].id);
-  const activeGroup = GROUPS.find((group) => group.id === activeGroupId) || GROUPS[0];
+  const [activeGroupId, setActiveGroupId] = useState(groups[0]?.id);
+  const activeGroup = groups.find((group) => group.id === activeGroupId) || groups[0];
 
   const byKey = useMemo(() => {
     const map = {};
@@ -196,19 +199,19 @@ const AdminHomeSectionsPanel = ({
     <section className="admin-card admin-home-sections-card">
       <div className="admin-card-head">
         <div>
-          <h2>Home page sections</h2>
-          <p>Edit by area below. Save writes everything to the database. Add / Remove runs immediately.</p>
+          <h2>{heading}</h2>
+          <p>{description}</p>
         </div>
       </div>
 
       <div className="admin-home-tabs" role="tablist" aria-label="Home page sections">
-        {GROUPS.map((group) => (
+        {groups.map((group) => (
           <button
             key={group.id}
             type="button"
             role="tab"
-            aria-selected={activeGroup.id === group.id}
-            className={`admin-home-tab${activeGroup.id === group.id ? ' active' : ''}`}
+            aria-selected={activeGroup?.id === group.id}
+            className={`admin-home-tab${activeGroup?.id === group.id ? ' active' : ''}`}
             onClick={() => setActiveGroupId(group.id)}
           >
             <span>{group.title}</span>
@@ -218,9 +221,11 @@ const AdminHomeSectionsPanel = ({
       </div>
 
       <form className="admin-form-grid admin-form-grid--single-column admin-home-sections-form" onSubmit={handleSaveAll}>
-        <SectionShell key={activeGroup.id} title={activeGroup.title} subtitle={activeGroup.subtitle}>
-          {activeGroup.keys.map((key) => renderFieldsForKey(key))}
-        </SectionShell>
+        {activeGroup ? (
+          <SectionShell key={activeGroup.id} title={activeGroup.title} subtitle={activeGroup.subtitle}>
+            {activeGroup.keys.map((key) => renderFieldsForKey(key))}
+          </SectionShell>
+        ) : null}
         <div className="admin-actions admin-home-save-row">
           <button type="submit" className="admin-btn admin-btn-accent">
             <FiEdit2 />

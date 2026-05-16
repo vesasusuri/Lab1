@@ -86,6 +86,13 @@ export const initialData = {
         { title: 'NFON', imageUrl: 'https://dummyimage.com/140x100/f3f4f6/111827&text=NFON', imageAlt: 'NFON', metadata: { width: 140, height: 100 }, sortOrder: 3, isActive: true },
       ],
     },
+    {
+      key: 'companies_cards',
+      title: 'Featured companies',
+      isActive: true,
+      sortOrder: 4,
+      items: [],
+    },
   ],
   pageContent: initialPageContent,
   userViewPages: [
