@@ -14,8 +14,10 @@ const initialExperiences = [
     },
 ];
 
-export default function WorkExperience() {
-    const [experiences, setExperiences] = useState(initialExperiences);
+export default function WorkExperience({ experiences: controlledExperiences, onExperiencesChange }) {
+    const [internalExperiences, setInternalExperiences] = useState(initialExperiences);
+    const experiences = controlledExperiences ?? internalExperiences;
+    const setExperiences = onExperiencesChange ?? setInternalExperiences;
 
     const handleChange = (id, field, value) => {
         setExperiences(prev =>

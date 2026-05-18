@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../../context/AuthContext';
 import { FiActivity, FiBarChart2, FiFileText, FiGrid, FiLogOut, FiMenu, FiSettings, FiUsers, FiX } from 'react-icons/fi';
 import '../../shared/AdminShared.scss';
 import './AdminSidebar.scss';
@@ -20,6 +21,12 @@ const AdminSideBar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, logout } = useAuth();
+
+  const handleSignOut = async () => {
+    await logout();
+    navigate('/login');
+  };
 
   return (
     <>
@@ -81,11 +88,11 @@ const AdminSideBar = () => {
           <div className="admin-sidebar-user">
             <div className="admin-sidebar-avatar">AD</div>
             <div className="admin-sidebar-user-info">
-              <span className="admin-sidebar-user-name">Platform Admin</span>
-              <span className="admin-sidebar-user-role">Admin Console</span>
+              <span className="admin-sidebar-user-name">{user?.name || 'Platform Admin'}</span>
+              <span className="admin-sidebar-user-role">{user?.email || 'Admin Console'}</span>
             </div>
           </div>
-          <button className="admin-sidebar-signout" onClick={() => { localStorage.clear(); navigate('/login'); }}>
+          <button className="admin-sidebar-signout" type="button" onClick={handleSignOut}>
             <FiLogOut />
             Sign Out
           </button>

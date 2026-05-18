@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomePageContentController;
 use App\Http\Controllers\HomePageSectionItemController;
+use App\Http\Controllers\InterviewController;
+use App\Http\Controllers\ResumeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,6 +41,7 @@ Route::view('/applied-jobs', 'welcome');
 Route::view('/unfinished-jobs', 'welcome');
 Route::view('/saved-jobs', 'welcome');
 Route::view('/interviews', 'welcome');
+Route::view('/interviews/join/{token}', 'welcome');
 Route::view('/interviews/{roomName}', 'welcome');
 Route::view('/messages', 'welcome');
 Route::view('/resume', 'welcome');
@@ -56,3 +59,19 @@ Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth');
 Route::get('/auth/user', [AuthController::class, 'user'])->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/api/resume', [ResumeController::class, 'show']);
+    Route::post('/api/resume/upload', [ResumeController::class, 'upload']);
+    Route::post('/api/resume/{resume}/analyze', [ResumeController::class, 'analyze']);
+    Route::get('/api/resume/{resume}/ats', [ResumeController::class, 'atsScore']);
+    Route::get('/api/resume/{resume}/job-match', [ResumeController::class, 'jobMatch']);
+
+    Route::get('/api/interviews', [InterviewController::class, 'index']);
+    Route::get('/api/interviews/candidates', [InterviewController::class, 'candidates']);
+    Route::post('/api/interviews', [InterviewController::class, 'store']);
+    Route::get('/api/interviews/access/{token}', [InterviewController::class, 'roomAccess']);
+    Route::get('/api/interviews/{interview}', [InterviewController::class, 'show']);
+    Route::put('/api/interviews/{interview}', [InterviewController::class, 'update']);
+    Route::delete('/api/interviews/{interview}', [InterviewController::class, 'destroy']);
+});

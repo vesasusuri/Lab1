@@ -1,161 +1,107 @@
-import React, { useMemo, useState } from 'react';
-import { JitsiMeeting } from '@jitsi/react-sdk';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaCalendarAlt, FaExternalLinkAlt, FaVideo } from 'react-icons/fa';
+import { FaCalendarAlt, FaExternalLinkAlt, FaMapMarkerAlt, FaVideo } from 'react-icons/fa';
+import InterviewMeeting from '../../../../../../components/InterviewMeeting/InterviewMeeting';
+import { listInterviews } from '../../../../../../api/interviewsApi';
+import {
+  formatInterviewDate,
+  formatStatusLabel,
+  typeLabel,
+} from '../../../../../../utils/interviewUtils';
 import './Interviews.scss';
 
-const scheduledInterviews = [
-    {
-        id: 1,
-        company: 'Outsorcy',
-        role: 'Frontend Developer',
-        time: 'Today, 14:30',
-        roomName: 'outsorcy-frontend-interview',
-    },
-    {
-        id: 2,
-        company: 'Telkos',
-        role: 'React Engineer',
-        time: 'Tomorrow, 10:00',
-        roomName: 'telkos-react-engineer-interview',
-    },
-];
-
-const normalizeRoomName = (value) => value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-
-const formatRoomTitle = (roomName) => roomName
-    .split('-')
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
-
 const Interviews = () => {
-    const navigate = useNavigate();
-    const { roomName } = useParams();
-    const decodedRoomName = roomName ? decodeURIComponent(roomName) : '';
-    const [customRoomName, setCustomRoomName] = useState('');
+  const navigate = useNavigate();
+  const { token } = useParams();
+  const [interviews, setInterviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-    const activeRoomTitle = useMemo(() => (
-        decodedRoomName ? formatRoomTitle(decodedRoomName) : ''
-    ), [decodedRoomName]);
+  const loadInterviews = useCallback(async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const data = await listInterviews();
+      setInterviews(data.interviews || []);
+    } catch (err) {
+      setInterviews([]);
+      if (err?.response?.status === 401) {
+        setError('Please log in to view your interviews.');
+      } else {
+        setError('Unable to load interviews.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-    const joinRoom = (nextRoomName) => {
-        const normalizedRoomName = normalizeRoomName(nextRoomName);
+  useEffect(() => {
+    if (!token) {
+      loadInterviews();
+    }
+  }, [token, loadInterviews]);
 
-        if (!normalizedRoomName) {
-            return;
-        }
-
-        navigate(`/interviews/${encodeURIComponent(normalizedRoomName)}`);
-    };
-
+  if (token) {
     return (
-        <main className="interviews">
-            <section className="interviews__header">
-                <div>
-                    <span className="interviews__eyebrow">Video interviews</span>
-                    <h1>Interviews</h1>
-                    <p>Join scheduled calls or start a Jitsi room for a new interview.</p>
-                </div>
-
-                {decodedRoomName && (
-                    <button
-                        className="interviews__secondary-button"
-                        type="button"
-                        onClick={() => navigate('/interviews')}
-                    >
-                        Back to interviews
-                    </button>
-                )}
-            </section>
-
-            {!decodedRoomName ? (
-                <>
-                    <section className="interviews__join">
-                        <div>
-                            <h2>Start or join a room</h2>
-                            <p>Use a shared room name so both participants enter the same call.</p>
-                        </div>
-
-                        <form
-                            className="interviews__join-form"
-                            onSubmit={(event) => {
-                                event.preventDefault();
-                                joinRoom(customRoomName);
-                            }}
-                        >
-                            <input
-                                type="text"
-                                value={customRoomName}
-                                onChange={(event) => setCustomRoomName(event.target.value)}
-                                placeholder="interview-room-name"
-                                aria-label="Interview room name"
-                            />
-                            <button type="submit">
-                                <FaVideo aria-hidden="true" />
-                                Join room
-                            </button>
-                        </form>
-                    </section>
-
-                    <section className="interviews__list" aria-label="Scheduled interviews">
-                        {scheduledInterviews.map((interview) => (
-                            <article className="interviews__card" key={interview.id}>
-                                <div className="interviews__card-icon">
-                                    <FaCalendarAlt aria-hidden="true" />
-                                </div>
-                                <div className="interviews__card-content">
-                                    <h3>{interview.role}</h3>
-                                    <p>{interview.company}</p>
-                                    <span>{interview.time}</span>
-                                </div>
-                                <button
-                                    type="button"
-                                    onClick={() => joinRoom(interview.roomName)}
-                                >
-                                    <FaExternalLinkAlt aria-hidden="true" />
-                                    Join
-                                </button>
-                            </article>
-                        ))}
-                    </section>
-                </>
-            ) : (
-                <section className="interviews__meeting" aria-label="Jitsi meeting">
-                    <div className="interviews__meeting-header">
-                        <div>
-                            <span className="interviews__eyebrow">Live room</span>
-                            <h2>{activeRoomTitle || decodedRoomName}</h2>
-                        </div>
-                        <span className="interviews__room-name">{decodedRoomName}</span>
-                    </div>
-
-                    <div className="interviews__jitsi-frame">
-                        <JitsiMeeting
-                            domain="meet.jit.si"
-                            roomName={decodedRoomName}
-                            configOverwrite={{
-                                disableDeepLinking: true,
-                                prejoinPageEnabled: true,
-                            }}
-                            interfaceConfigOverwrite={{
-                                SHOW_JITSI_WATERMARK: false,
-                            }}
-                            getIFrameRef={(iframeRef) => {
-                                iframeRef.style.height = '100%';
-                                iframeRef.style.width = '100%';
-                            }}
-                            onReadyToClose={() => navigate('/interviews')}
-                        />
-                    </div>
-                </section>
-            )}
-        </main>
+      <main className="interviews">
+        <InterviewMeeting
+          token={token}
+          onLeave={() => navigate('/interviews')}
+        />
+      </main>
     );
+  }
+
+  return (
+    <main className="interviews">
+      <section className="interviews__header">
+        <div>
+          <span className="interviews__eyebrow">Video interviews</span>
+          <h1>Interviews</h1>
+          <p>Your scheduled interviews with secure join links.</p>
+        </div>
+      </section>
+
+      {loading && <p className="interviews__empty">Loading interviews…</p>}
+      {error && <p className="interviews__empty interviews__empty--error">{error}</p>}
+
+      {!loading && !error && interviews.length === 0 && (
+        <p className="interviews__empty">No interviews scheduled yet.</p>
+      )}
+
+      <section className="interviews__list" aria-label="Scheduled interviews">
+        {interviews.map((interview) => (
+          <article className="interviews__card" key={interview.id}>
+            <div className="interviews__card-icon">
+              <FaCalendarAlt aria-hidden="true" />
+            </div>
+            <div className="interviews__card-content">
+              <h3>{interview.title}</h3>
+              <p>{interview.company || interview.hr_user?.name}</p>
+              <span>{formatInterviewDate(interview.scheduled_at)}</span>
+              <span className={`interviews__status interviews__status--${interview.status}`}>
+                {formatStatusLabel(interview.status)}
+              </span>
+              <span className="interviews__type">
+                {interview.type === 'video' ? <FaVideo aria-hidden="true" /> : <FaMapMarkerAlt aria-hidden="true" />}
+                {typeLabel(interview.type)}
+                {interview.type === 'in_person' && interview.location ? ` · ${interview.location}` : ''}
+              </span>
+            </div>
+            {interview.type === 'video' && interview.status !== 'cancelled' && (
+              <button
+                type="button"
+                onClick={() => navigate(`/interviews/join/${interview.access_token}`)}
+              >
+                <FaExternalLinkAlt aria-hidden="true" />
+                Join
+              </button>
+            )}
+          </article>
+        ))}
+      </section>
+    </main>
+  );
 };
 
 export default Interviews;

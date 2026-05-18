@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createInterview, listCandidates } from '../../../../../api/interviewsApi';
 import './ScheduleInterviewModal.scss';
 
-const ScheduleInterviewModal = ({ candidate, onClose }) => {
+const ScheduleInterviewModal = ({ candidate, onClose, onScheduled }) => {
   const [form, setForm] = useState({
     date: '',
     time: '',
@@ -9,14 +10,71 @@ const ScheduleInterviewModal = ({ candidate, onClose }) => {
     format: 'Video Call',
     note: '',
   });
+  const [registeredCandidates, setRegisteredCandidates] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    listCandidates()
+      .then((data) => setRegisteredCandidates(data.candidates || []))
+      .catch(() => setRegisteredCandidates([]));
+  }, []);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const formatToType = (format) => {
+    if (format === 'In-person') return 'in_person';
+    if (format === 'Phone') return 'phone';
+    return 'video';
+  };
+
+  const resolveCandidateUserId = () => {
+    if (candidate?.userId) return candidate.userId;
+    const match = registeredCandidates.find(
+      (c) => c.email?.toLowerCase() === candidate?.email?.toLowerCase(),
+    );
+    return match?.id || null;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => { onClose(); setSent(false); }, 1400);
+    setError('');
+    setLoading(true);
+
+    const candidateUserId = resolveCandidateUserId();
+    if (!candidateUserId) {
+      setError('This candidate must register on the platform before an interview can be scheduled.');
+      setLoading(false);
+      return;
+    }
+
+    const scheduledAt = `${form.date}T${form.time}:00`;
+
+    try {
+      const result = await createInterview({
+        candidate_user_id: candidateUserId,
+        title: candidate.role || candidate.appliedRole || 'Interview',
+        company: candidate.company || null,
+        scheduled_at: scheduledAt,
+        duration_minutes: Number(form.duration),
+        type: formatToType(form.format),
+        notes: form.note.trim() || null,
+      });
+      setSent(true);
+      onScheduled?.(result.interview);
+      setTimeout(() => {
+        onClose();
+        setSent(false);
+      }, 1400);
+    } catch (err) {
+      const message = err?.response?.data?.message
+        || Object.values(err?.response?.data?.errors || {}).flat().join(' ')
+        || 'Failed to schedule interview.';
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -75,34 +133,12 @@ const ScheduleInterviewModal = ({ candidate, onClose }) => {
             />
           </div>
 
-          <div className="sim-preview">
-            <span className="sim-preview-label">Invite Preview</span>
-            <div className="sim-preview-card">
-              <div className="sim-preview-row">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <span>{candidate?.name} — {candidate?.role}</span>
-              </div>
-              <div className="sim-preview-row">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                <span>{form.date || '—'} at {form.time || '—'}</span>
-              </div>
-              <div className="sim-preview-row">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>{form.duration} min · {form.format}</span>
-              </div>
-              {form.note && (
-                <div className="sim-preview-row sim-preview-note">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                  <span>{form.note}</span>
-                </div>
-              )}
-            </div>
-          </div>
+          {error && <p className="sim-error">{error}</p>}
 
           <div className="sim-footer">
             <button type="button" className="sim-cancel" onClick={onClose}>Cancel</button>
-            <button type="submit" className="sim-submit">
-              {sent ? '✓ Interview Scheduled!' : 'Send Invite'}
+            <button type="submit" className="sim-submit" disabled={loading}>
+              {sent ? '✓ Interview Scheduled!' : loading ? 'Scheduling…' : 'Send Invite'}
             </button>
           </div>
 

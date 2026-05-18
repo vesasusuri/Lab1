@@ -41,6 +41,7 @@ import AdminDashboardLogsPage from './views/Admin-View/pages/AdminDashboardLogsP
 import AdminDashboardReportsPage from './views/Admin-View/pages/AdminDashboardReportsPage/AdminDashboardReportsPage';
 import AdminActivityTracker from './views/Admin-View/components/shared/AdminActivityTracker';
 import { PlatformAdminProvider } from './context/PlatformAdminContext';
+import { AuthProvider } from './context/AuthContext';
 
 export default function App() {
     useEffect(() => {
@@ -50,6 +51,7 @@ export default function App() {
         <IntlProvider locale="en" messages={{}}>
             <PlatformAdminProvider>
             <BrowserRouter>
+            <AuthProvider>
                 <AdminActivityTracker />
                 <Routes>
                     <Route element={<UserViewLayout />}>
@@ -68,7 +70,7 @@ export default function App() {
                         <Route path="/unfinished-jobs" element={<UnfinishedJob/>} />
                         <Route path="/saved-jobs" element={<SavedJob/>} />
                         <Route path="/interviews" element={<Interview/>} />
-                        <Route path="/interviews/:roomName" element={<Interview/>} />
+                        <Route path="/interviews/join/:token" element={<Interview/>} />
                         <Route path="/profile" element={<ProfilePage/>} />
                         <Route path="/messages" element={<MessagesPage/>} />
                         <Route path="/resume" element={<ResumePage />} />
@@ -95,6 +97,7 @@ export default function App() {
                         <Route path="/admin-dashboard/settings" element={<AdminDashboardSettingsPage />} />
                     </Route>
                 </Routes>
+            </AuthProvider>
             </BrowserRouter>
             </PlatformAdminProvider>
         </IntlProvider>
