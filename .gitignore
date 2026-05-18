@@ -1,4 +1,7 @@
 /node_modules
+/vendor
 /.env
 /.env.backup
 /.phpunit.result.cache
+/resources/js/context/AuthContext.js
+/resources/js/utils/authRedirect.js

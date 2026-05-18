@@ -33,6 +33,28 @@
   }
 }
 
+.interviews__empty {
+  text-align: center;
+  color: #7782a5;
+  padding: 32px 16px;
+
+  &--error {
+    color: #b42318;
+  }
+}
+
+.interviews__status,
+.interviews__type {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #7782a5;
+}
+
+.interviews__status--cancelled {
+  color: #9a948c;
+}
+
 .interviews__eyebrow {
   color: #f5cb23;
   font-size: 12px;
@@ -78,7 +100,6 @@
     outline: none;
 
     &:focus {
-    //   border-color: #fdd535;
       box-shadow: 0 0 0 3px rgba(253, 213, 53, 0.2);
     }
   }

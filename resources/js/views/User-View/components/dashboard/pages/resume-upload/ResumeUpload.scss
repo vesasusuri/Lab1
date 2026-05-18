@@ -111,6 +111,29 @@
     &__body {
       padding: 2rem;
     }
+
+    &__analyzing {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+      padding: 0.75rem 1rem;
+      background: #fff3cd;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    &__spinner {
+      animation: resume-upload-spin 0.9s linear infinite;
+    }
+
+    &__error {
+      margin: 0 0 1rem;
+      font-size: 13px;
+      color: #b42318;
+    }
   
     &__drop {
       border: 2px dashed #e7dfd4;
@@ -207,6 +230,10 @@
     }
   }
   
+  @keyframes resume-upload-spin {
+    to { transform: rotate(360deg); }
+  }
+
   @media (max-width: 480px) {
     .resume-page {
       &__body {

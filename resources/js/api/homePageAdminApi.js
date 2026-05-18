@@ -9,8 +9,8 @@ export function getHomePagePayload() {
   return axios.get(URL_GET).then((r) => r.data);
 }
 
-export function putHomePageContent(body) {
-  return axios.put(URL_PUT_CONTENT, body).then((r) => r.data);
+export function putHomePageContent(body, pageKey = 'home') {
+  return axios.put(URL_PUT_CONTENT, { ...body, _pageKey: pageKey }).then((r) => r.data);
 }
 
 export function putHomePageSections(sections) {

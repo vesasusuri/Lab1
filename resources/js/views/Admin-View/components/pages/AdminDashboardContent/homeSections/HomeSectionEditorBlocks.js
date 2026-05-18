@@ -135,6 +135,15 @@ export function CompaniesFields({
   onAddItem,
   onDeleteItem,
 }) {
+  const formatReviews = (reviews) => JSON.stringify(Array.isArray(reviews) ? reviews : [], null, 2);
+  const updateReviews = (idx, text) => {
+    try {
+      const parsed = JSON.parse(text);
+      if (Array.isArray(parsed)) updateItemMetadata(section.key, idx, { reviews: parsed });
+    } catch {
+    }
+  };
+
   return (
     <div className="admin-field">
       <div className="admin-home-row">
@@ -151,6 +160,9 @@ export function CompaniesFields({
               employees: '—',
               location: '—',
               openRoles: '—',
+              detailIntro: 'Learn about this company and read feedback shared by people who have worked there.',
+              history: 'Company history and background.',
+              reviews: [],
             },
             sortOrder: (section.items?.length || 0) + 1,
             isActive: true,
@@ -209,6 +221,34 @@ export function CompaniesFields({
             <div className="admin-field">
               <label>Open roles</label>
               <input value={item.metadata?.openRoles || ''} onChange={(e) => updateItemMetadata(section.key, idx, { openRoles: e.target.value })} placeholder="12 open roles" />
+            </div>
+            <div className="admin-field admin-field--full">
+              <label>Details page intro</label>
+              <textarea
+                value={item.metadata?.detailIntro || ''}
+                onChange={(e) => updateItemMetadata(section.key, idx, { detailIntro: e.target.value })}
+                placeholder="Short intro shown on the company details page"
+                rows={2}
+              />
+            </div>
+            <div className="admin-field admin-field--full">
+              <label>Company history</label>
+              <textarea
+                value={item.metadata?.history || ''}
+                onChange={(e) => updateItemMetadata(section.key, idx, { history: e.target.value })}
+                placeholder="Longer company story for the details page"
+                rows={4}
+              />
+            </div>
+            <div className="admin-field admin-field--full">
+              <label>Reviews JSON</label>
+              <textarea
+                key={`${item.id || idx}-${JSON.stringify(item.metadata?.reviews || [])}`}
+                defaultValue={formatReviews(item.metadata?.reviews)}
+                onBlur={(e) => updateReviews(idx, e.target.value)}
+                rows={7}
+              />
+              <small>Use an array of objects with author, role, rating, and comment.</small>
             </div>
           </div>
         </div>

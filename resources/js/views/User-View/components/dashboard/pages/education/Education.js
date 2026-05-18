@@ -13,8 +13,10 @@ const initialEducation = [
     },
 ];
 
-export default function Education() {
-    const [education, setEducation] = useState(initialEducation);
+export default function Education({ education: controlledEducation, onEducationChange }) {
+    const [internalEducation, setInternalEducation] = useState(initialEducation);
+    const education = controlledEducation ?? internalEducation;
+    const setEducation = onEducationChange ?? setInternalEducation;
 
     const handleChange = (id, field, value) => {
         setEducation(prev =>

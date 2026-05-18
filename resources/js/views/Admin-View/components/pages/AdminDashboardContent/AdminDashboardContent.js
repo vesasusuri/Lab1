@@ -65,6 +65,15 @@ const pageFields = {
   ],
 };
 
+const COMPANIES_SECTION_GROUPS = [
+  {
+    id: 'companies',
+    title: 'Company cards & details',
+    subtitle: 'Listing cards, detail page content, images, metadata, and reviews.',
+    keys: ['companies_cards'],
+  },
+];
+
 const AdminDashboardContent = () => {
   const {
     data,
@@ -141,8 +150,48 @@ const AdminDashboardContent = () => {
         />
       )}
 
+      {activePage === 'companies' && (
+        <AdminHomeSectionsPanel
+          homeSectionsForm={homeSectionsForm}
+          setHomeSectionsForm={setHomeSectionsForm}
+          persistHomeSections={updateHomeSections}
+          uploadHomeSectionImage={uploadHomeSectionImage}
+          createHomeSectionItem={createHomeSectionItem}
+          deleteHomeSectionItem={deleteHomeSectionItem}
+          groups={COMPANIES_SECTION_GROUPS}
+          heading="Companies database"
+          description="Manage company listing cards and each company details page from the same database records."
+        />
+      )}
 
-     
+      {fields.length > 0 && (
+        <section className="admin-card">
+          <div className="admin-card-head">
+            <div>
+              <h2>{activePageMeta?.title || 'Page'} copy</h2>
+              <p>Update the editable text for this public page.</p>
+            </div>
+          </div>
+          <form className="admin-form-grid" onSubmit={submitContent}>
+            {fields.map((field) => (
+              <div key={field.key} className="admin-field">
+                <label>{field.label}</label>
+                {field.type === 'textarea' ? (
+                  <textarea value={form[field.key] || ''} onChange={(e) => updateField(field.key, e.target.value)} />
+                ) : (
+                  <input value={form[field.key] || ''} onChange={(e) => updateField(field.key, e.target.value)} />
+                )}
+              </div>
+            ))}
+            <div className="admin-actions">
+              <button type="submit" className="admin-btn admin-btn-accent">
+                <FiEdit2 />
+                Save Page Copy
+              </button>
+            </div>
+          </form>
+        </section>
+      )}
     </main>
   );
 };

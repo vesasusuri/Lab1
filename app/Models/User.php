@@ -5,14 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'role'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    public const ROLE_CANDIDATE = 'candidate';
+
+    public const ROLE_HR = 'hr';
+
+    public const ROLE_ADMIN = 'admin';
 
     protected function casts(): array
     {
@@ -20,5 +28,35 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function hrInterviews(): HasMany
+    {
+        return $this->hasMany(Interview::class, 'hr_user_id');
+    }
+
+    public function candidateInterviews(): HasMany
+    {
+        return $this->hasMany(Interview::class, 'candidate_user_id');
+    }
+
+    public function latestResume(): HasOne
+    {
+        return $this->hasOne(Resume::class)->latestOfMany();
+    }
+
+    public function resumes(): HasMany
+    {
+        return $this->hasMany(Resume::class);
+    }
+
+    public function isHr(): bool
+    {
+        return $this->role === self::ROLE_HR || $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isCandidate(): bool
+    {
+        return $this->role === self::ROLE_CANDIDATE;
     }
 }

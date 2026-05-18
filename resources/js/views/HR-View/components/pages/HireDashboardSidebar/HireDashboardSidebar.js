@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './HireDashboardSidebar.scss';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../../../../context/AuthContext';
 
 const mainNav = [
   {
@@ -47,8 +48,14 @@ const bottomNav = [
 const HireDashboardSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const company = localStorage.getItem('user_company') || 'Your Company';
+  const { user, logout } = useAuth();
+  const company = user?.name || localStorage.getItem('user_company') || 'Your Company';
   const initials = company.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+
+  const handleSignOut = async () => {
+    await logout();
+    navigate('/login');
+  };
   const [open, setOpen] = useState(false);
 
   const handleNav = (path) => {
@@ -113,11 +120,11 @@ const HireDashboardSidebar = () => {
           <div className="hire-sidebar-user">
             <div className="hire-sidebar-avatar">{initials}</div>
             <div className="hire-sidebar-user-info">
-              <span className="hire-sidebar-user-name">{company}</span>
-              <span className="hire-sidebar-user-role">Hiring Team</span>
+              <span className="hire-sidebar-user-name">{user?.name || company}</span>
+              <span className="hire-sidebar-user-role">{user?.email || 'Hiring Team'}</span>
             </div>
           </div>
-          <button className="hire-sidebar-signout" onClick={() => { localStorage.clear(); navigate('/login'); }}>
+          <button className="hire-sidebar-signout" type="button" onClick={handleSignOut}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             Sign Out
           </button>

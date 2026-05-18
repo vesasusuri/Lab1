@@ -4,8 +4,10 @@ import './Skills.scss';
 
 const initialSkills = ['React', 'JavaScript', 'Node.js', 'Laravel', 'MySQL', 'Git'];
 
-export default function Skills() {
-    const [skills, setSkills] = useState(initialSkills);
+export default function Skills({ skills: controlledSkills, onSkillsChange }) {
+    const [internalSkills, setInternalSkills] = useState(initialSkills);
+    const skills = controlledSkills ?? internalSkills;
+    const setSkills = onSkillsChange ?? setInternalSkills;
     const [input, setInput] = useState('');
 
     const handleAdd = () => {

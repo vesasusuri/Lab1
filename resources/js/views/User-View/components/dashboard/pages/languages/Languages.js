@@ -9,8 +9,10 @@ const initialLanguages = [
     { id: 2, language: 'English', level: 'Fluent' },
 ];
 
-export default function Languages() {
-    const [languages, setLanguages] = useState(initialLanguages);
+export default function Languages({ languages: controlledLanguages, onLanguagesChange }) {
+    const [internalLanguages, setInternalLanguages] = useState(initialLanguages);
+    const languages = controlledLanguages ?? internalLanguages;
+    const setLanguages = onLanguagesChange ?? setInternalLanguages;
 
     const handleChange = (id, field, value) => {
         setLanguages(prev =>
